@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ChatCat - Rooms</title>
+	<link rel="stylesheet" href="/css/roomsStyles.css">
+	<script src="/js/jquery-2.1.4.min.js"></script> 
+	<script src="/socket.io/socket.io.js"></script>
+	
+	<!-- This script will initiate handshake with the server.    -->
+	<script>
+		'use strict';
+		$(() => {
+			//let socket = io('http://localhost:3000/roomslist');
+			// 'host' is from /rooms route in routes/index.js
+			let socket = io('<%= host %>/roomslist', {
+				transports: ['websocket']
+			});
+
+			//socket.on('connect', () => console.log('Connected to server'));
+
+			let newRoomInput = $("input[name='roomName']");
+
+			let renderChatRooms = chatRooms => {
+				let listStr = '';
+				let roomsListDiv = $("#roomsListUL");
+				for(let item of chatRooms) {
+					listStr += `<a href="/chat/${item.roomId}"><li>${item.room}</li></a>`;
+				}
+				//roomsListDiv.html('') - clears out the contents of the div
+				roomsListDiv.html('').append(listStr);
+			}
+			//get a list of chatRooms
+			socket.emit('getChatRooms');
+
+			//Event listener for chatRoomsList
+			socket.on('chatRoomsList', chatRooms => {
+				renderChatRooms(JSON.parse(chatRooms));
+			});
+
+			$("#createBtn").on('click', () => {
+				if(newRoomInput.val() != '') {
+					socket.emit('createNewRoom', newRoomInput.val());
+					newRoomInput.val('');
+				}
+			});
+		
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="titlePanel">
+			<h1>ChatCAT | Select or Create a Chatroom</h1>
+		</div>
+		<div class="controls">
+			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
+			<p class="userName"><%= user.fullName %></p>
+			<a href="/logout" id="logOutBtn">Logout</a>
+		</div>
+		<div class="controls">
+			<input type="text" name="roomName" placeholder="Create a new Chatroom">
+			<a href="#" id="createBtn">Create</a>
+		</div>
+		<div class="roomsListDiv">
+			<ul class="roomsList" id="roomsListUL">
+			<!-- Loop list items here -->
+				
+				
+			<!-- Loop ends -->
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
