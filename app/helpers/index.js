@@ -31,9 +31,9 @@ let route = routes => {
 //Find a single user based on key.
 //To the findOne(), we pass an object which maps the key to be queried to, to the value we want to query with 
 //findOne() returns a promise
-let findOne = profileID => {
+let findOne = profileId => {
 	return db.userModel.findOne({
-		'profileID' : profileID
+		'profileId' : profileId
 	});
 }
 
