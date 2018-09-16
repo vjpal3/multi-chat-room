@@ -13,6 +13,7 @@
 		$(() => {
 			//let socket = io('http://localhost:3000/roomslist');
 			// 'host' is from /rooms route in routes/index.js
+			//initiate handshake with the server
 			let socket = io('<%= host %>/roomslist', {
 				transports: ['websocket']
 			});

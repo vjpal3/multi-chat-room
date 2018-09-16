@@ -2,7 +2,7 @@
 const h = require('../helpers');
 
 module.exports = (io, app) => {
-  let allrooms =app.locals.chatrooms;	
+  let allrooms =app.locals.chatrooms;	 
 
   // Eventlistener will listen to the handshake from rooms.ejs 
   io.of('/roomslist').on('connection', socket => {

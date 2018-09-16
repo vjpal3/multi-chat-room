@@ -39,6 +39,7 @@ Mongoose.connect(config.dbURI,
 
 //Turn schema into an usable model. This model allows us to 
 //create documents and store in the collection
+//This code should come after mongoose.connect()
 let userModel = Mongoose.model('chatUser', chatUser);
 
 module.exports = {

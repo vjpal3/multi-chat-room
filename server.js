@@ -8,9 +8,9 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use(chatCat.session); //should come before mounting the routers.
+app.use(chatCat.session); //should come before mounting the router.
 app.use(passport.initialize()); //hooks up passport to req and res stream that express provides access to
-app.use(passport.session()); //hooks up express session middleware into passport
+app.use(passport.session()); //hooks up express session middleware with passport
 
 app.use(require('morgan')('combined', {
 	stream: {
